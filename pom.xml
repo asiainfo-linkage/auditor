@@ -15,7 +15,7 @@
         <module>auditor-plugin</module>
         <module>auditor-pipeline</module>
         <module>auditor-server</module>
-        <!-- <module>auditor-assembly</module> -->
+        <!-- <module>auditor-assembly</module> commented by zhangli3-->
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
