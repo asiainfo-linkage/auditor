@@ -1,0 +1,157 @@
+{
+	"protocol": "EventPipelineProtocol",
+	"namespace": "com.ailk.oci.auditor.protocol.event.pipeline.avro",
+	"types": [{
+		"type": "record",
+		"name": "HdfsEvent",
+		"fields": [{
+			"name": "src",
+			"type": ["null", "string"],
+			"default": null
+		},
+		{
+			"name": "dst",
+			"type": ["null", "string"],
+			"default": null
+		},
+		{
+			"name": "owner",
+			"type": ["null", "string"],
+			"default": null
+		},
+		{
+			"name": "group",
+			"type": ["null", "string"],
+			"default": null
+		},
+		{
+			"name": "permissions",
+			"type": ["null", "string"],
+			"default": null
+		}]
+	},
+	{
+		"type": "record",
+		"name": "HBaseEvent",
+		"fields": [{
+			"name": "table",
+			"type": ["null", "string"],
+			"default": null
+		},
+		{
+			"name": "family",
+			"type": ["null", "string"],
+			"default": null
+		},
+		{
+			"name": "qualifier",
+			"type": ["null", "string"],
+			"default": null
+		}]
+	},
+	{
+		"type": "record",
+		"name": "HiveEvent",
+		"fields": [{
+			"name": "query",
+			"type": ["null", "string"],
+			"default": null
+		},
+		{
+			"name": "database",
+			"type": ["null", "string"],
+			"default": null
+		},
+		{
+			"name": "table",
+			"type": ["null", "string"],
+			"default": null
+		},
+		{
+			"name": "location",
+			//org.apache.hadoop.hive.ql.hooks.Entity#getLocation
+			"type": ["null", "string"],
+			"default": null
+		},
+		{
+			"name": "targetType",
+			//DataBase\Table\Index etc..
+			"type": ["null", "string"],
+			"default": null
+		}]
+	},
+	{
+		"type": "record",
+		"name": "Event",
+		"fields": [{
+			"name": "service",
+			"type": ["null", "string"],
+			"default": null
+		},
+		{
+			"name": "user",
+			"type": ["null", "string"],
+			"default": null
+		},
+		{
+			"name": "impersonator",
+			"type": ["null", "string"],
+			"default": null
+		},
+		{
+			"name": "localTime",
+			"type": "long"
+		},
+		{
+			"name": "hostName",
+			"type": ["null", "string"],
+			"default": null
+		},
+		{
+			"name": "hostAddress",
+			"type": ["null", "string"],
+			"default": null
+		},
+		{
+			"name": "operation",
+			"type": ["null", "string"],
+			"default": null
+		},
+		{
+			"name": "allowed",
+			"type": "boolean"
+		},
+		{
+			"name": "event",
+			"type": ["HdfsEvent", "HBaseEvent", "HiveEvent"]
+		}]
+	},
+	{
+		"type": "record",
+		"name": "WriteRequest",
+		"fields": [{
+			"name": "events",
+			"type": {
+				"type": "array",
+				"items": "Event"
+			}
+		}]
+	},
+	{
+		"type": "record",
+		"name": "WriteResponse",
+		"fields": [{
+			"name": "success",
+			"type": "boolean"
+		}]
+	}],
+	"messages": {
+		"write": {
+			"request": [{
+				"name": "request",
+				"type": "WriteRequest"
+			}],
+			"response": "WriteResponse"
+		}
+	}
+}
