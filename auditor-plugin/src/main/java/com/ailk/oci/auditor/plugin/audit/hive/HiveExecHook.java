@@ -8,11 +8,13 @@ import com.ailk.oci.auditor.plugin.audit.UserInfo;
 import com.ailk.oci.auditor.plugin.audit.hive.util.TargetType;
 import com.ailk.oci.auditor.protocol.event.pipeline.avro.Event;
 import com.ailk.oci.auditor.protocol.event.pipeline.avro.HiveEvent;
+
 import org.apache.hadoop.hive.metastore.TableType;
 import org.apache.hadoop.hive.ql.exec.DDLTask;
 import org.apache.hadoop.hive.ql.exec.Task;
 import org.apache.hadoop.hive.ql.hooks.*;
 import org.apache.hadoop.hive.ql.plan.DDLWork;
+import org.apache.hadoop.hive.shims.ShimLoader;
 import org.apache.hadoop.util.ExitUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,8 +71,10 @@ public class HiveExecHook implements ExecuteWithHookContext {
 
                     String operationName = hookContext.getOperationName();
                     UserInfo userInfo = new UserInfo(hookContext.getUgi().toString());
-                    String userName = hookContext.getUserName();
-                    String[] address = parseIpAddress(hookContext.getIpAddress());
+//                    String userName = hookContext.getUserName();
+//                    String[] address = parseIpAddress(hookContext.getIpAddress());
+                    String userName = hookContext.getUgi().getUserName();//hookContext.getUserName();
+                    String[] address = parseIpAddress(ShimLoader.getHadoopShims().getJobLauncherHttpAddress(hookContext.getConf()));//getJobLauncherRpcAddress
                     Event event = Event.newBuilder()
                             .setService(pipeline.getServiceName())
                             .setAllowed(true)
@@ -118,8 +122,9 @@ public class HiveExecHook implements ExecuteWithHookContext {
         if (supportted(entity.getType())) {
             String operationName = hookContext.getOperationName();
             UserInfo userInfo = new UserInfo(hookContext.getUgi().toString());
-            String userName = hookContext.getUserName();
-            String[] address = parseIpAddress(hookContext.getIpAddress());
+            String userName = hookContext.getUgi().getUserName();//hookContext.getUserName();
+//            String[] address = parseIpAddress(hookContext.getIpAddress());
+            String[] address =  parseIpAddress(ShimLoader.getHadoopShims().getJobLauncherHttpAddress(hookContext.getConf()));
             String db = entity.getTable() != null ? entity.getTable().getDbName() : "";
             String table = entity.getTable() != null ? entity.getTable().getTableName() : "";
             String location = "";
@@ -171,7 +176,7 @@ public class HiveExecHook implements ExecuteWithHookContext {
             case LOCAL_DIR:
                 targetType = TargetType.LOCAL_DIR;
                 break;
-            case UDF:
+            default:
                 targetType = TargetType.UDF;
                 break;
         }

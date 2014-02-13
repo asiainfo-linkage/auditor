@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * Time: 下午5:01
  * To change this template use File | Settings | File Templates.
  */
-public class Pipeline implements AutoCloseable {
+public class Pipeline  {
     public static final String QUEUE_FULL_POLICY_SHUTDOWN = "shutdown";
     public static final String QUEUE_FULL_POLICY_DROP = "drop";
     private final static Logger LOG = LoggerFactory.getLogger(Pipeline.class);
@@ -175,7 +175,6 @@ public class Pipeline implements AutoCloseable {
         outTask.outProcessors = outProcessors;
     }
 
-    @Override
     public void close() throws Exception {
         for (Processor processor : inProcessors) {
             try {
@@ -208,10 +207,11 @@ public class Pipeline implements AutoCloseable {
         QUEUE_FULL
     }
 
-    public static abstract interface Processor extends AutoCloseable {
+    public static abstract interface Processor  {
         Object[] onElements(Object... elements);
 
         void updateConfig(Properties properties);
+        void close() throws Exception;
     }
 
     public static abstract interface InProcessor extends Processor {
