@@ -7,12 +7,11 @@
     <parent>
         <groupId>com.ailk.oci.auditor</groupId>
         <artifactId>auditor</artifactId>
-        <version>och2.2.0-SNAPSHOT</version>
+        <version>och2.0.0-SNAPSHOT</version>
     </parent>
 
     <groupId>com.ailk.oci.auditor</groupId>
     <artifactId>auditor-protocol-event-pipeline-avro</artifactId>
-    <version>och2.0.0-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
