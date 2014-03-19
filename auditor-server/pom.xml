@@ -12,7 +12,7 @@
 
     <groupId>com.ailk.oci.auditor</groupId>
     <artifactId>auditor-server</artifactId>
-    <version>och2.0.0-SNAPSHOT</version>
+    <version>och2.0.0</version>
     <dependencies>
         <dependency>
             <groupId>com.ailk.oci.auditor</groupId>
