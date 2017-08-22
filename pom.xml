@@ -5,7 +5,7 @@
 
     <groupId>com.ailk.oci.auditor</groupId>
     <artifactId>auditor</artifactId>
-    <version>och2.0.0-SNAPSHOT</version>
+    <version>och2.0.0</version>
     <packaging>pom</packaging>
 
     <name>auditor</name>
